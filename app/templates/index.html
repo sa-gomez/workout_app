@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Workouts</h1>
+
+  <form method="post" action="/workouts" class="card">
+    <h2>New Workout</h2>
+    <label>Date
+      <input type="date" name="workout_date" value="{{ today }}" required>
+    </label>
+    <label>Notes
+      <input type="text" name="notes" placeholder="optional">
+    </label>
+    <button type="submit">Start Workout</button>
+  </form>
+
+  <ul class="workout-list">
+    {% for workout in workouts %}
+      <li>
+        <a href="/workouts/{{ workout.id }}">{{ workout.date }}</a>
+        {% if workout.notes %}<span class="notes">— {{ workout.notes }}</span>{% endif %}
+        <form method="post" action="/workouts/{{ workout.id }}/delete" class="inline">
+          <button type="submit" class="danger">Delete</button>
+        </form>
+      </li>
+    {% else %}
+      <li class="empty">No workouts yet. Start one above.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

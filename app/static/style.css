@@ -1,0 +1,148 @@
+:root {
+  color-scheme: light dark;
+  --bg: #f6f7f9;
+  --fg: #1a1a1a;
+  --card: #ffffff;
+  --border: #dcdfe4;
+  --accent: #2563eb;
+  --danger: #dc2626;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14161a;
+    --fg: #e6e8eb;
+    --card: #1e2126;
+    --border: #33373e;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--fg);
+  text-decoration: none;
+}
+
+main {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.card h2 {
+  margin: 0 0 0.25rem;
+  font-size: 1rem;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  font-size: 0.9rem;
+}
+
+input {
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  color: var(--fg);
+  font-size: 1rem;
+}
+
+button {
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: var(--accent);
+  color: white;
+  font-size: 0.95rem;
+  cursor: pointer;
+  align-self: flex-start;
+}
+
+button.danger {
+  background: transparent;
+  color: var(--danger);
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+}
+
+form.inline {
+  display: inline;
+}
+
+.workout-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.workout-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 0.8rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+}
+
+.workout-list a {
+  color: var(--accent);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.notes {
+  color: #7a7f87;
+  font-size: 0.9rem;
+}
+
+.sets-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.sets-table th, .sets-table td {
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.empty {
+  color: #7a7f87;
+  font-style: italic;
+}
