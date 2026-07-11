@@ -1,13 +1,30 @@
 {% extends "base.html" %}
 {% block content %}
   <p><a href="/">&larr; Back to workouts</a></p>
-  <h1>Workout — {{ workout.date }}</h1>
+  <h1>Workout — {{ workout.date }}{% if workout.day_type %} <span class="tag">{{ workout.day_type }}</span>{% endif %}</h1>
   {% if workout.notes %}<p class="notes">{{ workout.notes }}</p>{% endif %}
 
-  <form method="post" action="/workouts/{{ workout.id }}/sets" class="card">
+  {% if plan %}
+    <div class="card">
+      <h2>Today's Plan — {{ plan.label }}</h2>
+      <ul class="plan-list">
+        {% for ex in plan.exercises %}
+          <li>
+            <a href="/workouts/{{ workout.id }}?exercise={{ ex.name | urlencode }}#log-set">{{ ex.name }}</a>
+            <span class="notes">{{ ex.working_sets }} sets × {{ ex.reps }}</span>
+            {% if ex.video_url %}
+              <a href="{{ ex.video_url }}" target="_blank" rel="noopener noreferrer" class="video-link">video</a>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endif %}
+
+  <form method="post" action="/workouts/{{ workout.id }}/sets" class="card" id="log-set">
     <h2>Log a Set</h2>
     <label>Exercise
-      <input type="text" name="exercise_name" list="exercise-options" required autocomplete="off">
+      <input type="text" name="exercise_name" list="exercise-options" value="{{ prefill_exercise }}" required autocomplete="off">
       <datalist id="exercise-options">
         {% for exercise in exercises %}
           <option value="{{ exercise.name }}">

@@ -13,6 +13,7 @@ class Exercise(SQLModel, table=True):
 class Workout(SQLModel, table=True):
     id: int | None = Field(default=None, primary_key=True)
     date: dt.date = Field(default_factory=dt.date.today, index=True)
+    day_type: str | None = None
     notes: str | None = None
     created_at: dt.datetime = Field(default_factory=dt.datetime.utcnow)
 

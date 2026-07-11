@@ -9,7 +9,7 @@ from sqlmodel import Session, select
 
 from app.db import get_session, init_db
 from app.models import Exercise, ExerciseSet, Workout
-from app.program import load_program
+from app.program import get_day_templates, load_program
 
 
 @asynccontextmanager
@@ -29,7 +29,11 @@ def index(request: Request, session: Session = Depends(get_session)):
     return templates.TemplateResponse(
         request,
         "index.html",
-        {"workouts": workouts, "today": date.today().isoformat()},
+        {
+            "workouts": workouts,
+            "today": date.today().isoformat(),
+            "day_types": list(get_day_templates().keys()),
+        },
     )
 
 
@@ -42,10 +46,11 @@ def program(request: Request):
 @app.post("/workouts")
 def create_workout(
     workout_date: date = Form(default_factory=date.today),
+    day_type: str = Form(default=""),
     notes: str = Form(default=""),
     session: Session = Depends(get_session),
 ):
-    workout = Workout(date=workout_date, notes=notes or None)
+    workout = Workout(date=workout_date, day_type=day_type or None, notes=notes or None)
     session.add(workout)
     session.commit()
     session.refresh(workout)
@@ -54,14 +59,23 @@ def create_workout(
 
 @app.get("/workouts/{workout_id}")
 def workout_detail(
-    workout_id: int, request: Request, session: Session = Depends(get_session)
+    workout_id: int,
+    request: Request,
+    exercise: str = "",
+    session: Session = Depends(get_session),
 ):
     workout = session.get(Workout, workout_id)
     exercises = session.exec(select(Exercise).order_by(Exercise.name)).all()
+    plan = get_day_templates().get(workout.day_type) if workout.day_type else None
     return templates.TemplateResponse(
         request,
         "workout_detail.html",
-        {"workout": workout, "exercises": exercises},
+        {
+            "workout": workout,
+            "exercises": exercises,
+            "plan": plan,
+            "prefill_exercise": exercise,
+        },
     )
 
 

@@ -92,3 +92,18 @@ def load_program() -> list[ProgramWeek]:
         )
 
     return weeks
+
+
+@lru_cache
+def get_day_templates() -> dict[str, ProgramDay]:
+    """Distinct workout day types (e.g. 'Legs #1') to their exercise list.
+
+    The exercise list for a given day type is identical every week in this
+    program (only rep/RPE targets change), so the first week's version of
+    each day is used as the representative template.
+    """
+    templates: dict[str, ProgramDay] = {}
+    for week in load_program():
+        for day in week.days:
+            templates.setdefault(day.label, day)
+    return templates

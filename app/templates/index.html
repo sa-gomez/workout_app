@@ -7,6 +7,14 @@
     <label>Date
       <input type="date" name="workout_date" value="{{ today }}" required>
     </label>
+    <label>Workout Type
+      <select name="day_type">
+        <option value="">— Custom / none —</option>
+        {% for day_type in day_types %}
+          <option value="{{ day_type }}">{{ day_type }}</option>
+        {% endfor %}
+      </select>
+    </label>
     <label>Notes
       <input type="text" name="notes" placeholder="optional">
     </label>
@@ -17,6 +25,7 @@
     {% for workout in workouts %}
       <li>
         <a href="/workouts/{{ workout.id }}">{{ workout.date }}</a>
+        {% if workout.day_type %}<span class="tag">{{ workout.day_type }}</span>{% endif %}
         {% if workout.notes %}<span class="notes">— {{ workout.notes }}</span>{% endif %}
         <form method="post" action="/workouts/{{ workout.id }}/delete" class="inline">
           <button type="submit" class="danger">Delete</button>
