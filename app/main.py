@@ -9,6 +9,7 @@ from sqlmodel import Session, select
 
 from app.db import get_session, init_db
 from app.models import Exercise, ExerciseSet, Workout
+from app.program import load_program
 
 
 @asynccontextmanager
@@ -30,6 +31,12 @@ def index(request: Request, session: Session = Depends(get_session)):
         "index.html",
         {"workouts": workouts, "today": date.today().isoformat()},
     )
+
+
+@app.get("/program")
+def program(request: Request):
+    weeks = load_program()
+    return templates.TemplateResponse(request, "program.html", {"weeks": weeks})
 
 
 @app.post("/workouts")

@@ -29,6 +29,9 @@ body {
 header {
   padding: 1rem 1.5rem;
   border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
 }
 
 .brand {
@@ -36,6 +39,22 @@ header {
   font-size: 1.1rem;
   color: var(--fg);
   text-decoration: none;
+}
+
+nav {
+  display: flex;
+  gap: 1rem;
+}
+
+nav a {
+  color: var(--fg);
+  text-decoration: none;
+  font-size: 0.9rem;
+  opacity: 0.75;
+}
+
+nav a:hover {
+  opacity: 1;
 }
 
 main {
@@ -145,4 +164,45 @@ form.inline {
 .empty {
   color: #7a7f87;
   font-style: italic;
+}
+
+.table-scroll {
+  overflow-x: auto;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.program-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--card);
+  white-space: nowrap;
+}
+
+.program-table th, .program-table td {
+  text-align: left;
+  padding: 0.5rem 0.7rem;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+
+.program-table td {
+  white-space: normal;
+  min-width: 8rem;
+}
+
+.program-table a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+h2 {
+  margin-top: 2rem;
+}
+
+h3 {
+  font-size: 1rem;
+  color: #7a7f87;
+  margin-bottom: 0.5rem;
 }

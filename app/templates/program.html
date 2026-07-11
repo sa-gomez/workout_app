@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+  <h1>Program — Ultimate PPL (Phase 1)</h1>
+
+  {% for week in weeks %}
+    <h2>{{ week.label }}</h2>
+    {% for day in week.days %}
+      <h3>{{ day.label }}</h3>
+      <div class="table-scroll">
+        <table class="program-table">
+          <thead>
+            <tr>
+              <th>Exercise</th>
+              <th>Warm-up</th>
+              <th>Working Sets</th>
+              <th>Reps</th>
+              <th>RPE</th>
+              <th>Rest</th>
+              <th>Substitutions</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for ex in day.exercises %}
+              <tr>
+                <td>
+                  {% if ex.video_url %}
+                    <a href="{{ ex.video_url }}" target="_blank" rel="noopener noreferrer">{{ ex.name }}</a>
+                  {% else %}
+                    {{ ex.name }}
+                  {% endif %}
+                </td>
+                <td>{{ ex.warmup_sets }}</td>
+                <td>{{ ex.working_sets }}</td>
+                <td>{{ ex.reps }}</td>
+                <td>{{ ex.rpe }}</td>
+                <td>{{ ex.rest }}</td>
+                <td>{{ ex.sub1 }}{% if ex.sub2 %}, {{ ex.sub2 }}{% endif %}</td>
+                <td>{{ ex.notes }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% endfor %}
+  {% endfor %}
+{% endblock %}
